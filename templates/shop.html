@@ -1,0 +1,238 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+
+	<!-- title -->
+	<title>Shop</title>
+
+	<!-- favicon -->
+	<link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.png' %}">
+	<!-- google font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+	<!-- fontawesome -->
+	<link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+	<!-- owl carousel -->
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+	<!-- magnific popup -->
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+	<!-- animate css -->
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<!-- mean menu css -->
+	<link rel="stylesheet" href="{% static 'css/meanmenu.min.css' %}">
+	<!-- main style -->
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	<!-- responsive -->
+	<link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+</head>
+<body>
+	
+	<!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+	
+	<!-- header -->
+	{% include 'navbar.html' %}
+	<!-- end header -->
+
+	<!-- search area -->
+	<div class="search-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<span class="close-btn"><i class="fas fa-window-close"></i></span>
+					<div class="search-bar">
+						<div class="search-bar-tablecell">
+							<h3>Search For:</h3>
+							<input id ="search" type="text" placeholder="Keywords">
+							<button type="submit" >Search <i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end search arewa -->
+	
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p>Fresh and Organic</p>
+						<h1>Shop</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- products -->
+	<div class="product-section mt-150 mb-150">
+		<div class="container">
+			<form action="{% url 'search' %}" method="get">
+				{% csrf_token %}
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="search-bar">
+							<div class="search-bar-tablecell">
+								<h3>Search For:</h3>
+								<input type="text" name="search" id="search" placeholder="Keywords">
+								<button type="submit">Search <i class="fas fa-search"></i></button>
+							</div>
+							<div class="search-keywords">
+								<span>Từ khóa nổi bật: </span>
+								<a href="#">Gấu Bông</a>
+								<a href="#">Quần jean</a>
+								<a href="#">Giày thể thao</a>
+								<!-- Các từ khóa khác -->
+							</div>
+							<style>
+								.search-keywords {
+									margin-top: 10px;
+									margin-bottom: 10px;
+								}
+								
+								.search-keywords span {
+									font-weight: bold;
+								}
+								
+								.keyword-link {
+									display: inline-block;
+									margin-right: 10px;
+									padding: 5px 10px;
+									font-size: 50px;
+									background-color: #f2f2f2;
+									border-radius: 5px;
+									text-decoration: none;
+									color: #333;
+									transition: background-color 0.3s;
+								}
+								
+								.keyword-link:hover {
+									background-color: #e0e0e0;
+								}
+							</style>
+						</div>
+					</div>
+					<!-- <div class="col-md-12">
+						<div class="product-filters">
+							<ul>
+								<li class="active" data-filter="*">All</li>
+								<li data-filter=".strawberry">Strawberry</li>
+								<li data-filter=".berry">Berry</li>
+								<li data-filter=".lemon">Lemon</li>
+							</ul>
+						</div>
+					</div> -->
+				</div>
+			</from>
+			<div class="row product-lists">
+				{% if check %}
+				{% for product in page_obj %}
+				<div class="col-lg-4 col-md-6 text-center strawberry">
+					<div class="single-product-item">
+						<div class="product-image"> 
+							<a href="{% url 'productDetail' product.id %}" ><img src="{{ product.img.url }}" alt="{{ product.name }}" style="width: 226px; height:226px;"></a>
+						</div>
+						<h3>{{ product.name }}</h3>
+						<p class="product-price"><span>Per {{ product.unit }}</span> {{ product.price }} </p>
+						<a href="javascript:void(0);" onclick="addToCart('{{ product.id }}')" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+						<a href="{% url 'buyNow' product.id %}" class="cart-btn"><i class="fas fa-money-bill-wave"></i><b> Buy Now</b></a>
+					</div>
+				</div>
+				{% endfor %}
+				{%else%}
+				<div class="col-lg-4 col-md-6 text-center strawberry">
+					<div class="single-product-item">
+						<br><br>
+						<h3>Product</h3>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 text-center strawberry">
+					<div class="single-product-item">
+						<br><br>
+						<h3>Not</h3>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 text-center strawberry">
+					<div class="single-product-item">
+						<br><br>
+						<h3>Found</h3>
+					</div>
+				</div>
+				{%endif%}
+			</div>
+
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="pagination-wrap">
+						<ul>
+							<li><a href="?page=1">First</a></li>
+							
+							<li><a href="{% if page_obj.has_previous %} ?page={{ page_obj.previous_page_number }} {% else %} javascript:void(0); {% endif %}">Prev</a></li>					
+							{% for num in page_obj.paginator.page_range %}
+							<li><a {% if page_obj.number == num %} class="active" {% endif %} href="?page={{ num }}">{{ num }}</a></li>
+							{% endfor %}
+							<li><a href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+							<li><a href="{% if page_obj.has_next %}  ?page={{ page_obj.next_page_number }} {%else%} javascript:void(0); {% endif %}">Next</a></li>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end products -->
+
+	<!-- footer -->
+	{% include 'footer.html' %}
+	<!-- end footer -->
+
+	
+	<!-- jquery -->
+	<script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
+	<!-- bootstrap -->
+	<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+	<!-- count down -->
+	<script src="{% static 'js/jquery.countdown.js' %}"></script>
+	<!-- isotope -->
+	<script src="{% static 'js/jquery.isotope-3.0.6.min.js' %}"></script>
+	<!-- waypoints -->
+	<script src="{% static 'js/waypoints.js' %}"></script>
+	<!-- owl carousel -->
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<!-- magnific popup -->
+	<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+	<!-- mean menu -->
+	<script src="{% static 'js/jquery.meanmenu.min.js' %}"></script>
+	<!-- sticker js -->
+	<script src="{% static 'js/sticker.js' %}"></script>
+	<!-- main js -->
+	<script src="{% static 'js/main.js' %}"></script>
+	<script src="{% static 'js/addtocart.js' %}"></script>
+	<script>
+		var user_is_logged_in = {{ request.user.is_authenticated|yesno:"true,false" }};
+	</script>
+	<!-- SweetAlert2 CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+	<!-- SweetAlert2 JS -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	
+</body>
+</html>

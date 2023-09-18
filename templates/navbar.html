@@ -1,0 +1,165 @@
+{% load static %}
+
+<!-- header -->
+<div class="top-header-area" id="sticker">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 text-center">
+                <div class="main-menu-wrap">
+                    <!-- logo -->
+                    <div class="site-logo">
+                        <a href="{% url 'index' %}">
+                            <img src="{% static 'img/logo.png' %}" alt="">
+                        </a>
+                    </div>
+                    <!-- logo -->
+
+                    <!-- menu start -->
+
+                    <nav class="main-menu">
+                        <ul>
+                            <li class="{% if request.path == '/' %} current-list-item {% endif %}"><a href="{% url 'index' %}">Home</a></li>
+                            <li class="{% if request.path == '/shop' %} current-list-item {% endif %}"><a href="{% url 'shop' %}">Shop</a></li>
+                            <li class="{% if request.path == '/news' %} current-list-item {% endif %}"><a href="{% url 'news' %}">News</a></li>
+                            <li class="{% if request.path == '/contact' %} current-list-item {% endif %}"><a href="{% url 'contact'%}">Contact</a></li>
+                            <li class="{% if request.path == '/cart' %} current-list-item {% endif %}">
+                                <a class="shopping-cart" style="position:relative; " href="{% url 'cart' %}">MyCart  <i class="fas fa-shopping-cart"></i>
+                                    <span style="
+                                        position: absolute;
+                                        top: 12%;
+                                        right: -8%;
+                                        background-color: red;
+                                        color: white;
+                                        border-radius: 100%;
+                                        padding: 0% 10%;
+                                        font-size: 10px;
+                                        " 
+                                        id="cart-count">0
+                                    </span>
+                                </a>
+                            </li>
+
+                            
+                            <li class="{% if request.path == '/loginUser' %} current-list-item {% endif %}" >
+                                {% if user.is_authenticated %}
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" id="dropdownButton"><i class="fas fa-user"></i> {{request.user.username|slice:":5"}}</button>
+                                    <div class="dropdown-content" id="dropdownContent">
+                                        <a href="{% url 'liked' %}"><i class="fas fa-heart"></i> Liked</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="{% url 'voucher' %}"><i class="fas fa-percent"></i> Voucher</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="{% url 'order' %}"> <i class="fas fa-shopping-basket"></i> Order</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="{% url 'profile' %}"><i class="fas fa-user-circle"></i> Profile</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="user" href="{% url 'logoutUser' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                    </div>
+                                </div>
+                                {% else %}
+                                    <a class="user" href="{% url 'loginUser' %}"><i class="fas fa-user"></i> Login</a>
+                                {% endif %}
+                            </li>
+                            
+                        </ul>
+                    </nav>
+                    <div class="mobile-menu"></div>
+                    <!-- menu end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end header -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/update_cart_icon.js'%}"></script>
+
+    <style>
+        .dropdown-divider {
+            border-top: 1px solid #000;
+            margin: -0.1px 0;
+        }
+    
+        button {
+        border: none;
+        background: none;
+        cursor: pointer;
+        width: 120px;
+    }
+    
+    /* Style the dropdown */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    
+    /* Style the dropdown toggle button */
+    .dropdown-toggle {
+        padding: 10px 15px;
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    /* Style the dropdown content */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #377e32;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    }
+    
+    /* Style the dropdown links */
+    .dropdown-content a {
+        display: block;
+        padding: 5px 15px;
+        text-decoration: none;
+        color: #F28123;
+    }
+    
+    /* Show the dropdown content on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    .dropdown-toggle {
+        padding: 10px 15px;
+        background-color: rgb(10, 98, 10); /* Màu nền bắt mắt */
+        border: none;
+        border-radius: 5px;
+        color: #fff; /* Màu chữ trắng */
+        font-weight: bold; /* Chữ đậm */
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển màu */
+    }
+    
+    /* Hover effect for the dropdown toggle button */
+    .dropdown-toggle:hover {
+        background-color: rgb(16, 64, 42); /* Màu nền khi di chuột qua */
+        color: #F28123; /* Màu chữ khi di chuột qua */
+    }
+    .dropdown-content a:hover{
+        color: #F28123;
+    }
+    </style>
+    
+    <script>
+        const dropdownButton = document.getElementById('dropdownButton');
+    const dropdownContent = document.getElementById('dropdownContent');
+    
+    // Show/hide dropdown content on button click
+    dropdownButton.addEventListener('click', () => {
+        dropdownContent.classList.toggle('show');
+    });
+    
+    // Close the dropdown content when clicking outside
+    window.addEventListener('click', (event) => {
+        if (!event.target.matches('.dropdown-toggle')) {
+            if (dropdownContent.classList.contains('show')) {
+                dropdownContent.classList.remove('show');
+            }
+        }
+    });
+    </script>
